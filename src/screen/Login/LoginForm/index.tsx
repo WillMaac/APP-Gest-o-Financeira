@@ -1,0 +1,18 @@
+import { useForm } from 'react-hook-form';
+import { Text } from 'react-native';
+export interface FormLoginParams {
+  email: string;
+  password: string;
+}
+
+export function LoginForm() {
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmiting },
+  } = useForm<FormLoginParams>();
+
+  return<>
+  <Text className="text-white">Login form</Text>
+  </>
+}
