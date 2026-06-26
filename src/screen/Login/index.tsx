@@ -1,9 +1,19 @@
-import { Text, View } from "react-native";
+import { DimissKeyboardView } from '@/components/DismissKeyboard';
+import { PublicStackParamsList } from '@/routes/PublicRoutes';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export function Login(){
-  return(
-    <View className="flex-1 items-center justify-center text-9xl">
+export function Login() {
+  const navigation =
+    useNavigation<StackNavigationProp<PublicStackParamsList>>();
+  return (
+    <DimissKeyboardView>
       <Text>Tela de login</Text>
-    </View>
-  )
+      <TextInput className="bg-gray-500 w-full" />
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text>Registrar</Text>
+      </TouchableOpacity>
+    </DimissKeyboardView>
+  );
 }
