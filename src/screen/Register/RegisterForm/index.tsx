@@ -4,6 +4,8 @@ import { PublicStackParamsList } from '@/routes/PublicRoutes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { Text, View } from 'react-native';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../schema';
 
 interface FormRegisterParams {
   email: string;
@@ -13,12 +15,23 @@ interface FormRegisterParams {
 }
 
 export function RegisterForm() {
-  const navigation = useNavigation<NavigationProp<PublicStackParamsList>>()
+  const navigation = useNavigation<NavigationProp<PublicStackParamsList>>();
+const onSubmit = async() =>{}
+
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FormRegisterParams>();
+  } = useForm<FormRegisterParams>({
+    defaultValues: {
+      confirmPassword: "",
+      email: "",
+      name: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
   return (
     <>
       <AppInput
@@ -55,13 +68,19 @@ export function RegisterForm() {
         secureTextEntry
       />
 
-       <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
-        <AppButton iconName="arrow-forward">Cadastrar</AppButton>
-<View>
-  <Text className="mb-6 text-gray-300 text-base">Já possui uma conta?</Text>
-        <AppButton iconName="arrow-forward" mode="outline" onPress={()=> navigation.navigate("Login")}>
-          Acessar
-        </AppButton>
+      <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
+        <AppButton onPress={handleSubmit(onSubmit)}  iconName="arrow-forward">Cadastrar</AppButton>
+        <View>
+          <Text className="mb-6 text-gray-300 text-base">
+            Já possui uma conta?
+          </Text>
+          <AppButton
+            iconName="arrow-forward"
+            mode="outline"
+            onPress={() => navigation.navigate('Login')}
+          >
+            Acessar
+          </AppButton>
         </View>
       </View>
     </>
